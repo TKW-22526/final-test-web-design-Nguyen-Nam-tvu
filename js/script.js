@@ -81,7 +81,7 @@ function createProductCard(item, isAdmin) {
     const link = document.createElement("a");
     link.innerText = "Chi tiết";
     // Đường dẫn tùy thuộc vào việc đang đứng ở file nào
-    const detailPage = isAdmin ? "HTML/chi-tiet.html" : "chi-tiet.html";
+    const detailPage = isAdmin ? "html/chi-tiet.html" : "chi-tiet.html";
     link.setAttribute("href", detailPage + "?id=" + item.id);
     link.setAttribute("class", "btn btn-info btn-sm me-1");
 
