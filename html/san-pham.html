@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <title>Danh Sách Sản Phẩm</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">TechStore</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Quản lý</a></li>
+                    <li class="nav-item"><a class="nav-link" href="gioi-thieu.html">Giới thiệu</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="san-pham.html">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="lien-he.html">Liên hệ</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <h2 class="text-center mb-4">Các Sản Phẩm Công Nghệ</h2>
+        <div class="row" id="product-list-user"></div>
+    </div>
+
+    <footer class="text-center">
+        <p class="mb-0">SV thực hiện: Nguyễn Quốc Nam | Lớp: DA24TTC | Môn: Thiết kế Web</p>
+    </footer>
+
+    <script src="../JS/script.js"></script>
+    <script>
+        // Gọi hàm render của trang user (không có nút xóa sửa)
+        renderUserGrid(productList);
+    </script>
+</body>
+</html>

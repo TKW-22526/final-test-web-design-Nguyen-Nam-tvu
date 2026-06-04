@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <title>Quản Lý Sản Phẩm</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">TechStore</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Quản lý</a></li>
+                    <li class="nav-item"><a class="nav-link" href="HTML/gioi-thieu.html">Giới thiệu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="HTML/san-pham.html">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="HTML/lien-he.html">Liên hệ</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <h2 class="text-center mb-4">Trang Quản Lý Sản Phẩm</h2>
+        
+        <div class="bg-white p-3 rounded shadow-sm mb-4">
+            <div class="row g-2 mb-3">
+                <div class="col-md-4">
+                    <input type="text" id="search-input" class="form-control" placeholder="Tìm kiếm tên..." oninput="searchProduct()">
+                </div>
+            </div>
+            <hr>
+            <div class="row g-2">
+                <input type="hidden" id="form-id"> 
+                <div class="col-md-3"><input type="text" id="form-name" class="form-control" placeholder="Tên sản phẩm"></div>
+                <div class="col-md-3"><input type="number" id="form-price" class="form-control" placeholder="Giá tiền"></div>
+                <div class="col-md-4"><input type="text" id="form-image" class="form-control" placeholder="Link ảnh URL"></div>
+                <div class="col-md-2 d-grid">
+                    <button id="btn-save" class="btn btn-primary" onclick="saveProduct()">Thêm</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="product-list"></div>
+    </div>
+
+    <footer class="text-center">
+        <p class="mb-0">SV thực hiện: Nguyễn Quốc Nam | Lớp: DA24TTC | Môn: Thiết kế Web</p>
+    </footer>
+
+    <script src="JS/script.js"></script>
+    <script>
+        // Gọi hàm render của trang admin
+        renderAdminGrid(productList);
+    </script>
+</body>
+</html>
