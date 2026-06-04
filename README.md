@@ -178,7 +178,7 @@ Sinh viên cập nhật thông tin cá nhân tại đây:
 Họ và tên: Nguyễn Quốc Nam
 Mã số sinh viên: 110124128
 Lớp:DA24TTC
-Tên đề tài: Website quản lý đồ cồng nghệ
+Tên đề tài: Website quản lý sản phẩm công nghệ
 Liên kết GitHub repository:https://github.com/TKW-22526/final-test-web-design-Nguyen-Nam-tvu.git
 Liên kết GitHub Pages: https://tkw-22526.github.io/final-test-web-design-Nguyen-Nam-tvu/
 ```
