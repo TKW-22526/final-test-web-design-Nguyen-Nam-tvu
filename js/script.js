@@ -26,12 +26,28 @@ const productList = [
 function resolveImagePath(image) {
     if (!image) return "";
     const normalized = image.trim();
-    if (normalized.startsWith("http://") || normalized.startsWith("https://") || normalized.startsWith("assets/") || normalized.startsWith("../assets/") || normalized.startsWith("/")) {
+    if (normalized.startsWith("http://") || normalized.startsWith("https://")) {
         return normalized;
     }
-    const isHtmlPage = window.location.pathname.toLowerCase().includes("/html/");
-    const prefix = isHtmlPage ? "../assets/" : "assets/";
-    return prefix + normalized;
+    
+    let basePath = './assets/';
+    
+    // Kiểm tra xem file hiện tại có ở trong thư mục con không
+    if (window.location.pathname.toLowerCase().includes('/html/')) {
+        basePath = '../assets/';
+    }
+    
+    // Nếu là GitHub Pages, chuyển sang đường dẫn tuyệt đối
+    if (window.location.hostname.includes('github.io')) {
+        const pathParts = window.location.pathname.split('/').filter(p => p);
+        if (pathParts.length > 0) {
+            basePath = '/' + pathParts[0] + '/assets/';
+        } else {
+            basePath = '/assets/';
+        }
+    }
+    
+    return basePath + normalized;
 }
 
 // Hàm render cho trang Quản Lý (index.html)
