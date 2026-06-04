@@ -50,6 +50,41 @@ function resolveImagePath(image) {
     return basePath + normalized;
 }
 
+// Hàm để resolve đường dẫn link (chi tiết sản phẩm, v.v.)
+function resolveLinkPath(pageName) {
+    // Nếu đã là đường dẫn tuyệt đối, return luôn
+    if (pageName.startsWith('/')) {
+        return pageName;
+    }
+    
+    // Nếu là link external hoặc hash, return luôn
+    if (pageName.startsWith('http') || pageName.startsWith('//') || pageName.startsWith('#')) {
+        return pageName;
+    }
+    
+    // Nếu là GitHub Pages
+    if (window.location.hostname.includes('github.io')) {
+        const pathParts = window.location.pathname.split('/').filter(p => p);
+        let repoName = pathParts.length > 0 ? pathParts[0] : '';
+        
+        // Normalize pageName
+        let normalized = pageName;
+        
+        // Handle ../
+        while (normalized.startsWith('../')) {
+            normalized = normalized.substring(3);
+        }
+        
+        // Xây dựng base path
+        let basePath = repoName ? '/' + repoName + '/' : '/';
+        
+        return basePath + normalized;
+    }
+    
+    // Local: sử dụng đường dẫn tương đối
+    return pageName;
+}
+
 // Hàm render cho trang Quản Lý (index.html)
 function renderAdminGrid(list) {
     const container = document.getElementById("product-list");
@@ -98,7 +133,8 @@ function createProductCard(item, isAdmin) {
     link.innerText = "Chi tiết";
     // Đường dẫn tùy thuộc vào việc đang đứng ở file nào
     const detailPage = isAdmin ? "html/chi-tiet.html" : "chi-tiet.html";
-    link.setAttribute("href", detailPage + "?id=" + item.id);
+    const detailLink = resolveLinkPath(detailPage);
+    link.setAttribute("href", detailLink + "?id=" + item.id);
     link.setAttribute("class", "btn btn-info btn-sm me-1");
 
     cardDiv.appendChild(img);
@@ -202,4 +238,45 @@ function renderDetail() {
     } else {
         document.getElementById("detail-name").innerText = "Không tìm thấy sản phẩm!";
     }
+}
+
+// Hàm auto-fix tất cả các đường dẫn khi trang load
+function fixAllPaths() {
+    // Chỉ fix khi ở GitHub Pages
+    if (!window.location.hostname.includes('github.io')) {
+        return;
+    }
+    
+    // Fix tất cả các link
+    document.querySelectorAll('a[href]').forEach(link => {
+        const href = link.getAttribute('href');
+        if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('javascript:')) {
+            const fixed = resolveLinkPath(href.split('?')[0]);
+            const query = href.includes('?') ? '?' + href.split('?')[1] : '';
+            link.setAttribute('href', fixed + query);
+        }
+    });
+    
+    // Fix tất cả các script src
+    document.querySelectorAll('script[src]').forEach(script => {
+        const src = script.getAttribute('src');
+        if (!src.startsWith('http') && !src.startsWith('//')) {
+            script.setAttribute('src', resolveLinkPath(src));
+        }
+    });
+    
+    // Fix tất cả các link rel
+    document.querySelectorAll('link[href]').forEach(link => {
+        const href = link.getAttribute('href');
+        if (!href.startsWith('http') && !href.startsWith('//')) {
+            link.setAttribute('href', resolveLinkPath(href));
+        }
+    });
+}
+
+// Chạy hàm fix khi trang load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixAllPaths);
+} else {
+    fixAllPaths();
 }
