@@ -1,24 +1,42 @@
 const productList = [
-    {
-        id: "01",
-        name: "Laptop Dell XPS 15",
-        price: 35000000,
-        image: "laptopdell.jpg",
-        desc: "Laptop cao cấp, màn hình 4K sắc nét."
+   {
+    id: "01",
+    name: "Laptop Dell XPS 15",
+    price: 35000000,
+    image: "laptopdell.jpg",
+    desc: `- Năm ra mắt: 2023
+           - Màn hình: 15.6 inch (Tùy chọn độ phân giải FHD+ IPS hoặc OLED 3.5K có cảm ứng).
+           - Vi xử lý (CPU): Intel Core i7 hoặc i9 thế hệ 13 (Dòng H hiệu năng cao).
+           - Card đồ họa (GPU): NVIDIA GeForce RTX 4050 / 4060 / 4070.
+           - Bộ nhớ: RAM 16GB đến 64GB DDR5, ổ cứng SSD PCIe từ 512GB đến 4TB.
+           - Chất liệu: Nhôm nguyên khối gia công CNC kết hợp phần đệm tay bằng sợi carbon.
+           - Trọng lượng: Khoảng 1.86 kg - 1.92 kg.`
     },
     {
         id: "02",
         name: "iPhone 15 Pro",
         price: 28000000,
         image: "ip15prm.jpg",
-        desc: "Điện thoại khung titan siêu nhẹ, chip A17 Pro."
+        desc: `- Năm ra mắt: Tháng 9/2023.
+           - Màn hình: 6.1 inch Super Retina XDR OLED, hỗ trợ ProMotion 120Hz.
+           - Vi xử lý: Apple A17 Pro (tiến trình 3nm tiên tiến).
+           - Chất liệu: Khung viền Titanium chuẩn hàng không vũ trụ, mặt kính Ceramic Shield.
+           - Hệ thống Camera: Cụm 3 camera sau (Ống kính chính 48MP, Góc siêu rộng 12MP, Telephoto 12MP với zoom quang học 3x).
+           - Kết nối: Cổng sạc USB-C hỗ trợ chuẩn USB 3 tốc độ truyền tải cao.
+           - Trọng lượng: 187 gram.`
     },
     {
         id: "03",
         name: "Tai nghe Sony XM5",
         price: 7500000,
         image: "sonywh.jpg",
-        desc: "Tai nghe chống ồn chủ động tốt nhất hiện nay."
+        desc: `- Năm ra mắt: Tháng 5/2022.
+           - Kiểu dáng: Tai nghe chụp tai không dây (Wireless Over-ear).
+           - Công nghệ nổi bật: Chống ồn chủ động (ANC) hàng đầu với cụm 8 micro, kết hợp chip xử lý chống ồn HD QN1 và chip tích hợp V1.
+           - Chất lượng âm thanh: Driver 30mm thiết kế đặc biệt, hỗ trợ chuẩn âm thanh Hi-Res và codec LDAC.
+           - Thời lượng pin: Lên đến 30 giờ liên tục (khi bật chống ồn).
+           - Tính năng phụ trợ: Sạc nhanh 3 phút được 3 giờ nghe nhạc, kết nối đa điểm (Multipoint connection).
+           - Trọng lượng: 250 gram.`
     }
 ];
 
