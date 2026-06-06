@@ -32,12 +32,10 @@ function resolveImagePath(image) {
     
     let basePath = './assets/';
     
-    // Kiểm tra xem file hiện tại có ở trong thư mục con không
     if (window.location.pathname.toLowerCase().includes('/html/')) {
         basePath = '../assets/';
     }
     
-    // Nếu là GitHub Pages, chuyển sang đường dẫn tuyệt đối
     if (window.location.hostname.includes('github.io')) {
         const pathParts = window.location.pathname.split('/').filter(p => p);
         if (pathParts.length > 0) {
@@ -52,36 +50,46 @@ function resolveImagePath(image) {
 
 // Hàm để resolve đường dẫn link (chi tiết sản phẩm, v.v.)
 function resolveLinkPath(pageName) {
-    // Nếu đã là đường dẫn tuyệt đối, return luôn
     if (pageName.startsWith('/')) {
         return pageName;
     }
     
-    // Nếu là link external hoặc hash, return luôn
     if (pageName.startsWith('http') || pageName.startsWith('//') || pageName.startsWith('#')) {
         return pageName;
     }
     
-    // Nếu là GitHub Pages
     if (window.location.hostname.includes('github.io')) {
         const pathParts = window.location.pathname.split('/').filter(p => p);
         let repoName = pathParts.length > 0 ? pathParts[0] : '';
         
-        // Normalize pageName
         let normalized = pageName;
+        let goUpLevels = 0;
         
-        // Handle ../
         while (normalized.startsWith('../')) {
+            goUpLevels++;
             normalized = normalized.substring(3);
         }
         
-        // Xây dựng base path
+        const currentPath = window.location.pathname;
+        const isInHtmlFolder = currentPath.includes('/html/');
+        
         let basePath = repoName ? '/' + repoName + '/' : '/';
+        
+        if (goUpLevels === 0 && isInHtmlFolder && !normalized.includes('/')) {
+            basePath += 'html/';
+        }
+        
+        if (goUpLevels > 0) {
+            if (isInHtmlFolder) {
+                if (goUpLevels >= 1) {
+                    basePath += '';
+                }
+            }
+        }
         
         return basePath + normalized;
     }
     
-    // Local: sử dụng đường dẫn tương đối
     return pageName;
 }
 
@@ -131,7 +139,6 @@ function createProductCard(item, isAdmin) {
 
     const link = document.createElement("a");
     link.innerText = "Chi tiết";
-    // Đường dẫn tùy thuộc vào việc đang đứng ở file nào
     const detailPage = isAdmin ? "html/chi-tiet.html" : "chi-tiet.html";
     const detailLink = resolveLinkPath(detailPage);
     link.setAttribute("href", detailLink + "?id=" + item.id);
@@ -142,7 +149,6 @@ function createProductCard(item, isAdmin) {
     cardDiv.appendChild(price);
     cardDiv.appendChild(link);
 
-    // Nếu là trang quản lý thì mới thêm nút Sửa/Xóa
     if (isAdmin) {
         const editBtn = document.createElement("button");
         editBtn.innerText = "Sửa";
@@ -196,14 +202,14 @@ function saveProduct() {
 
     if (!name || !price) return alert("Nhập đủ tên và giá!");
 
-    if (id) { // Sửa
+    if (id) {
         const item = productList.find(p => p.id === id);
         if (item) {
             item.name = name;
             item.price = price;
             item.image = image;
         }
-    } else { // Thêm mới
+    } else {
         productList.push({
             id: Date.now().toString(),
             name: name,
@@ -242,12 +248,10 @@ function renderDetail() {
 
 // Hàm auto-fix tất cả các đường dẫn khi trang load
 function fixAllPaths() {
-    // Chỉ fix khi ở GitHub Pages
     if (!window.location.hostname.includes('github.io')) {
         return;
     }
     
-    // Fix tất cả các link
     document.querySelectorAll('a[href]').forEach(link => {
         const href = link.getAttribute('href');
         if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('javascript:')) {
@@ -257,7 +261,6 @@ function fixAllPaths() {
         }
     });
     
-    // Fix tất cả các script src
     document.querySelectorAll('script[src]').forEach(script => {
         const src = script.getAttribute('src');
         if (!src.startsWith('http') && !src.startsWith('//')) {
@@ -265,7 +268,6 @@ function fixAllPaths() {
         }
     });
     
-    // Fix tất cả các link rel
     document.querySelectorAll('link[href]').forEach(link => {
         const href = link.getAttribute('href');
         if (!href.startsWith('http') && !href.startsWith('//')) {
@@ -274,7 +276,6 @@ function fixAllPaths() {
     });
 }
 
-// Chạy hàm fix khi trang load
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', fixAllPaths);
 } else {
