@@ -1,4 +1,4 @@
-const productList = [
+let productList = [
    {
     id: "01",
     name: "Laptop Dell XPS 15",
@@ -39,6 +39,21 @@ const productList = [
            - Trọng lượng: 250 gram.`
     }
 ];
+
+function loadProducts() {
+    const stored = localStorage.getItem('productList');
+    if (stored) {
+        productList = JSON.parse(stored);
+    } else {
+        saveProducts();
+    }
+}
+
+function saveProducts() {
+    localStorage.setItem('productList', JSON.stringify(productList));
+}
+
+loadProducts();
 
 
 function resolveImagePath(image) {
@@ -197,6 +212,7 @@ function deleteProduct(id) {
     if (confirm("Xóa sản phẩm này?")) {
         const index = productList.findIndex(item => item.id === id);
         if (index !== -1) productList.splice(index, 1);
+        saveProducts();
         searchProduct();
     }
 }
@@ -224,20 +240,21 @@ function saveProduct() {
         const item = productList.find(p => p.id === id);
         if (item) {
             item.name = name;
-            item.price = price;
+            item.price = Number(price);
             item.image = image;
         }
     } else {
         productList.push({
             id: Date.now().toString(),
             name: name,
-            price: price,
+            price: Number(price),
             image: image,
             desc: "Thông tin đang cập nhật..."
         });
     }
+    saveProducts();
     resetForm();
-    searchProduct();
+    renderAdminGrid(productList);
 }
 
 function resetForm() {
